@@ -59,7 +59,7 @@ def main(_):
                     [mtest.loss, mtest.accuracy, mtest.prob], feed_dict)
                 return prob, accuracy
 
-            print('59 is ok')
+
             with tf.variable_scope("model"):
                 mtest = network.GRU(is_training=False, word_embeddings=wordembedding, settings=test_settings)
             saver = tf.train.Saver()
@@ -81,8 +81,8 @@ def main(_):
                                                test_pos2[i * test_settings.big_num:(i + 1) * test_settings.big_num],
                                                test_y[i * test_settings.big_num:(i + 1) * test_settings.big_num])
                     #增加到acc列表
-                    print(type(accuracy))
-                    print(accuracy)
+                    #print(type(accuracy))
+                    #print(accuracy)
                     #big_num = 10时，输出10次<class 'list'>
                     #accuracy是形如[1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0]的输出
                     acc.append(np.mean(np.reshape(np.array(accuracy), (test_settings.big_num))))
@@ -94,15 +94,15 @@ def main(_):
                 order = np.argsort(-allprob)
                 current_step = model_iter
 
-                print(acc)
-                print(len(acc))
+                #print(acc)
+                print('准确率' + str(sum(len)/len(acc)))
                 print('saving all test result...')
                 np.save('./out/allprob_iter_' + str(current_step) + '.npy', allprob)
                 allans = np.load('./data/allans.npy')
 
                 # caculate the pr curve area
-                #average_precision = average_precision_score(allans, allprob)
-                #print('PR curve area:' + str(average_precision))
+                average_precision = average_precision_score(allans, allprob)
+                print('PR curve area:' + str(average_precision))
 
 if __name__ == "__main__":
 	tf.app.run()
