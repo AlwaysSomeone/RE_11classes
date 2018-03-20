@@ -1,4 +1,10 @@
 import numpy as np
+#配置关系种类
+import network
+settings = network.Settings()
+num_classes = settings.num_classes - 1
+allans = np.load('./data/allans.npy')
+num_test = int(len(allans)/num_classes)
 
 #读取relation2id
 relation2id = {}
@@ -16,7 +22,7 @@ f.close()
 
 #读取测试文件真实关系列表
 allans = np.load('./data/allans.npy')
-allans = np.reshape(allans, (250,6))
+allans = np.reshape(allans, (num_test,num_classes))
 #print(allans)
 ans = []
 allans = list(allans)
@@ -30,8 +36,8 @@ for i in range(len(ans)):
 
 
 #读取预测关系列表
-allprob = np.load('./out/allprob_iter_200.npy')
-allprob = np.reshape(allprob, (250,6))
+allprob = np.load('./out/allprob_iter_570.npy')
+allprob = np.reshape(allprob, (num_test,num_classes))
 allprob = list(allprob)
 #print(allprob)
 pred = []
