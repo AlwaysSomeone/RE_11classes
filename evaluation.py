@@ -64,7 +64,10 @@ def main(_):
                 mtest = network.GRU(is_training=False, word_embeddings=wordembedding, settings=test_settings)
             saver = tf.train.Saver()
 
-            testlist = [580]
+            testlist = [210,220,230,240,250,260,270,280,290,300,
+                        310,320,330,340,350,360,370,380,390,400,
+                        410,420,430,440,450,460,470,480,490,500,
+                        510,520,530,540,550,560,570,580]
             for model_iter in testlist:
                 #读取训练9000次后的模型
                 saver.restore(sess, pathname + str(model_iter))
@@ -95,6 +98,7 @@ def main(_):
                 current_step = model_iter
 
                 #print(acc)
+                print(str(model_iter) + '次训练结果')
                 print('准确率' + str(sum(acc)/len(acc)))
                 print('saving all test result...')
                 np.save('./out/allprob_iter_' + str(current_step) + '.npy', allprob)
