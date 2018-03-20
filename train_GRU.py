@@ -158,7 +158,7 @@ def main(_):
 
                     current_step = tf.train.global_step(sess, global_step)
                     #为了节省不必要的空间，现在的设定是8000以后的step才会每过100个step存储一次模型。
-                    if current_step  == 580:
+                    if current_step > 200 and current_step % 10 == 0:
 
                         print('saving model')
                         path = saver.save(sess, save_path + 'ATT_GRU_model', global_step=current_step)
